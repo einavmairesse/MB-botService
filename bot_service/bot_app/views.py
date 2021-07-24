@@ -12,7 +12,9 @@ from .services.command_service import exec_command
 @csrf_exempt
 def start_test(request):
     # todo: support wget
-    command = request.POST.get('command')
+    data = json.loads(request.body)
+    command = data['command']
+    print(type(data))
     response_body = exec_command(command)
     headers = {'Content-Type': 'Application/json'}
     return HttpResponse(json.dumps(response_body), headers=headers)
